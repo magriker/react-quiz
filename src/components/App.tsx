@@ -32,13 +32,18 @@ function reducer(state, action) {
         ...state,
         status: "active",
       };
+    case "newAnswer":
+      return {
+        ...state,
+        answer: action.payload,
+      };
     default:
       throw new Error("Action unknown");
   }
 }
 
 function App() {
-  const [{ questions, status, index }, dispatch] = useReducer(
+  const [{ questions, status, index, answer }, dispatch] = useReducer(
     reducer,
     initialState
   );
@@ -66,7 +71,11 @@ function App() {
           ></StartScreen>
         )}
         {status === "active" && (
-          <Question question={questions[index]}></Question>
+          <Question
+            question={questions[index]}
+            dispatch={dispatch}
+            answer={answer}
+          ></Question>
         )}
       </ManinC>
     </div>
